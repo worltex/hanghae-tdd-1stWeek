@@ -18,7 +18,7 @@ public class PointService {
         Long updatedAmount= amount+userPoint.point();
         return pointRepository.chargePoint(userId, updatedAmount);
     }
-
+ 
     public UserPoint usePoint(Long userId, Long amount) {
         UserPoint userPoint = pointRepository.selectByUserId(userId);
         if(userPoint.point()<amount){

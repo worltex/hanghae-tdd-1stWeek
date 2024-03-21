@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -28,7 +27,7 @@ public class PointController {
      */
     @GetMapping("{id}/histories")
     public List<PointHistory> history(@PathVariable Long id) {
-        return  pointHistoryService.getPointHistoryByUserId(id);
+        return pointHistoryService.getPointHistoryByUserId(id);
     }
 
     /**

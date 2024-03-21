@@ -1,8 +1,5 @@
 package io.hhplus.tdd.point;
 
-import io.hhplus.tdd.database.PointHistoryTable;
-import io.hhplus.tdd.database.UserPointTable;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,17 +20,17 @@ public class PointControllerTest {
 
     @Autowired
     private PointController pointController;
-
+ 
     @Test
-    public void 충전하고_사용이후_사용이력_조회() throws InterruptedException{
+    public void 충전하고_사용이후_사용이력_조회() throws InterruptedException {
         //given
-        Long userId=1L;
-        Long amount=1000L;
-        Long useAmount =500L;
+        Long userId = 1L;
+        Long amount = 1000L;
+        Long useAmount = 500L;
 
         //when
         pointController.charge(userId, amount);
-        pointController.use(userId,useAmount);
+        pointController.use(userId, useAmount);
         List<PointHistory> history = pointController.history(userId);
 
         //then

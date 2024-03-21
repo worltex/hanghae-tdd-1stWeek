@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 @RequiredArgsConstructor
 public class PointRepositoryImpl implements PointRepository {
-
+ 
     private final UserPointTable userPointTable;
 
     @Override

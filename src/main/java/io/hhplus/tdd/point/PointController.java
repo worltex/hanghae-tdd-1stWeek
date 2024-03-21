@@ -13,6 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PointController {
     private final PointService pointService;
+    private final PointHistoryService pointHistoryService;
 
     /**
      * TODO - 특정 유저의 포인트를 조회하는 기능을 작성해주세요.
@@ -27,7 +28,7 @@ public class PointController {
      */
     @GetMapping("{id}/histories")
     public List<PointHistory> history(@PathVariable Long id) {
-        return  pointService.getPointHistoryByUserId(id);
+        return  pointHistoryService.getPointHistoryByUserId(id);
     }
 
     /**
@@ -35,7 +36,8 @@ public class PointController {
      */
     @PatchMapping("{id}/charge")
     public synchronized UserPoint charge(@PathVariable Long id, @RequestBody Long amount) throws InterruptedException {
-        pointService.chargePoint(id,amount);
+        UserPoint result = pointService.chargePoint(id, amount);
+        pointHistoryService.addPointHistory(id,amount, TransactionType.CHARGE, result.updateMillis());
         return pointService.getUserPointByUserId(id);
     }
 
@@ -44,7 +46,8 @@ public class PointController {
      */
     @PatchMapping("{id}/use")
     public synchronized UserPoint use(@PathVariable Long id, @RequestBody Long amount) throws InterruptedException {
-        pointService.usePoint(id,amount);
+        UserPoint result = pointService.usePoint(id, amount);
+        pointHistoryService.addPointHistory(id,amount, TransactionType.USE, result.updateMillis());
         return pointService.getUserPointByUserId(id);
     }
 }

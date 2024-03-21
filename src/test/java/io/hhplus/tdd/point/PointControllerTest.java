@@ -2,7 +2,11 @@ package io.hhplus.tdd.point;
 
 import io.hhplus.tdd.database.PointHistoryTable;
 import io.hhplus.tdd.database.UserPointTable;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -13,13 +17,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+@SpringBootTest
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class PointControllerTest {
 
-    private PointHistoryTable pointHistoryTable = new PointHistoryTable();
-    private UserPointTable userPointTable = new UserPointTable();
-    private PointService pointService = new PointServiceImpl(userPointTable,pointHistoryTable);
-    private PointController pointController = new PointController(pointService);
-
+    @Autowired
+    private PointController pointController;
 
     @Test
     public void 충전하고_사용이후_사용이력_조회() throws InterruptedException{

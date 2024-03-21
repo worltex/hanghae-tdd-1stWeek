@@ -1,14 +1,30 @@
 package io.hhplus.tdd.point;
 
-import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
-public interface PointService {
+@Service
+@RequiredArgsConstructor
+public class PointService {
+    private final PointRepository pointRepository;
 
-    UserPoint getUserPointByUserId(Long userId) throws InterruptedException;
+    public UserPoint getUserPointByUserId(Long userId) {
+        return pointRepository.selectByUserId(userId);
+    }
 
-    List<PointHistory> getPointHistoryByUserId(Long userId);
 
-    UserPoint chargePoint(Long userId, Long amount) throws InterruptedException;
+    public UserPoint chargePoint(Long userId, Long amount) {
+        UserPoint userPoint = pointRepository.selectByUserId(userId);
+        Long updatedAmount= amount+userPoint.point();
+        return pointRepository.chargePoint(userId, updatedAmount);
+    }
 
-    UserPoint usePoint(Long userId, Long amount) throws InterruptedException;
+    public UserPoint usePoint(Long userId, Long amount) {
+        UserPoint userPoint = pointRepository.selectByUserId(userId);
+        if(userPoint.point()<amount){
+            throw new RuntimeException("point 부족합니다.");
+        }
+        long updatedAmount = userPoint.point() - amount;
+        return pointRepository.usePoint(userId, updatedAmount);
+    }
 }

@@ -6,12 +6,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -30,8 +28,7 @@ class PointHistoryServiceTest {
     @Mock
     PointHistoryRepository pointHistoryRepository;
 
-
-
+ 
     @Test
     public void 유저의_포인트를_등록하고_기록_조회한다() {
         //given

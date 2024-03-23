@@ -14,14 +14,20 @@ public class PointService {
 
 
     public UserPoint chargePoint(Long userId, Long amount) {
+        if (amount < 0) {
+            throw new RuntimeException("금액은 0원 이상이어야합니다.");
+        }
         UserPoint userPoint = pointRepository.selectByUserId(userId);
-        Long updatedAmount= amount+userPoint.point();
+        Long updatedAmount = amount + userPoint.point();
         return pointRepository.chargePoint(userId, updatedAmount);
     }
  
     public UserPoint usePoint(Long userId, Long amount) {
+        if (amount < 0) {
+            throw new RuntimeException("금액은 0원 이상이어야합니다.");
+        }
         UserPoint userPoint = pointRepository.selectByUserId(userId);
-        if(userPoint.point()<amount){
+        if (userPoint.point() < amount) {
             throw new RuntimeException("point 부족합니다.");
         }
         long updatedAmount = userPoint.point() - amount;
